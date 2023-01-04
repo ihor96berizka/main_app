@@ -1,9 +1,10 @@
-#ifndef IDATAPROVIDER_H
-#define IDATAPROVIDER_H
+#ifndef IDATAPROVIDER_HPP
+#define IDATAPROVIDER_HPP
 
 #include <vector>
 namespace Solver
 {
+constexpr size_t kMaxNumberOfSamples{360};
 
 struct DistanceSensorData
 {
@@ -22,4 +23,4 @@ public:
 };
 
 }//  namespace Solver
-#endif // IDATAPROVIDER_H
+#endif // IDATAPROVIDER_HPP
