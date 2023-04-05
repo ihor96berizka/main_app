@@ -9,22 +9,69 @@
 
 namespace Solver
 {
-    
+/**
+ * @brief Describes obstacle with a set of parameters.
+*/
 struct Obstacle
 {
+    /**
+     * @brief Contains distance to obstacles(in meters) 
+    */
     std::vector<double> distances;
+
+    /**
+     * @brief Contains angles(in degrees) in which direction distance is measured.
+    */
     std::vector<double> angles;
+
+    /**
+     * @brief Average distance to obstacle(in meters).
+     * Is needed for further calculations.
+    */
     double averageDistance;
+
+    /**
+     * @brief Average angle(in rads) occupied by obstacle.
+    */
     double averageAngle;
+
+    /**
+     * @brief Power coefficient. Is used to ensure that component
+     * of repulsive field fully embaraces obstacle and its
+     * magnitude is comparable to magnitude of attractive field.
+    */
     double a;
 };
 
+/**
+ * @brief Contains parameters to configure ISolver.
+*/
 struct SolverParams
 {
-    static constexpr double _thresholdDistance = 2; // minimum distance to object.
-    static constexpr double _w_robot = 0.25; // robot width in meters.
-    static constexpr double _distance_sensor_range = 10.0; // maximum range of distance sensor, in meters.
-    static constexpr double _teta_goal = (60); // angle to goal point.
+    /**
+     * @brief Minimum distance to object. If object is located at closer
+     * distance - it will be considered as obstacles. Measured in meters.
+    */
+    static constexpr double _thresholdDistance = 2;
+
+    /**
+     * @brief Robot width in meters.
+    */
+    static constexpr double _w_robot = 0.25;
+
+    /**
+     * @brief Maximum range of distance sensor. Measured in meters.
+    */
+    static constexpr double _distance_sensor_range = 10.0;
+
+    /**
+     * @brief Heading angle which points to desired direction. Measured in degrees.
+    */
+    static constexpr double _teta_goal = (60);
+
+    /**
+     * @brief Scale parameter for attractive field.
+    */
     static constexpr double _gamma = 0.5; // see eq (11)
 };
 
