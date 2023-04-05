@@ -1,7 +1,7 @@
 #ifndef ROS_DATA_PROVIDER_HPP
 #define ROS_DATA_PROVIDER_HPP
 
-#include "idataprovider.hpp"
+#include "idataprovider.h"
 #include "data_interface/msg/lidar_sample.hpp"
 #include "thread_safe_queue.hpp"
 

@@ -1,5 +1,9 @@
 #include "main_node.hpp"
+
 #include "ros_data_provider.hpp"
+#include "solver.h"
+#include "linearsolver.h"
+#include "laplacesolver.h"
 
 MainSwcNode::MainSwcNode(): Node("main_swc_node")
 {
@@ -19,13 +23,16 @@ void MainSwcNode::init()
     });
 
     auto dataProvider = std::make_unique<RosDataProvider>(queue_);
-    solver_.init(std::move(dataProvider));
+    solver_ = //std::make_unique<Solver::LinearSolver>();
+            std::make_unique<Solver::GussianSolver>();
+            //std::make_unique<Solver::LaplaceSolver>();
+    solver_->init(std::move(dataProvider));
 
     processing_thread_ = std::make_unique<std::jthread>([this](std::stop_token stoken)
     {
         while (!stoken.stop_requested())
         {
-            int angle = solver_.calculateHeadingAngle();
+            int angle = solver_->calculateHeadingAngle();
             std::cout << "Safe angle: " << angle << std::endl;
             /*
             * send angle to actuator

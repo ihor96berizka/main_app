@@ -1,14 +1,25 @@
-#ifndef IDATAPROVIDER_HPP
-#define IDATAPROVIDER_HPP
+#ifndef IDATAPROVIDER_H
+#define IDATAPROVIDER_H
 
 #include <vector>
+#include <cmath>
+
 namespace Solver
 {
+
 constexpr size_t kMaxNumberOfSamples{360};
+
+constexpr double DegreesToRadians(double degrees) {
+    return degrees * (M_PI / 180);
+}
+
+constexpr double RadiansToDegrees(double radians) {
+    return radians * (180.0 / M_PI);
+}
 
 struct DistanceSensorData
 {
-    int angle;
+    double angle;  // in radians.
     double distance;
 };
 
@@ -23,4 +34,4 @@ public:
 };
 
 }//  namespace Solver
-#endif // IDATAPROVIDER_HPP
+#endif // IDATAPROVIDER_H

@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.20)
 project(Solver VERSION 1.0.0 LANGUAGES CXX)
 
-message("------------Configuring Solver lib-------------")
 set(DEFAULT_BUILD_TYPE "Release")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -14,26 +13,39 @@ endif()
 include(GNUInstallDirs)
 
 set(SOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/isolver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/solver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/linearsolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/laplacesolver.cpp
 )
 set(HEADER_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/idataprovider.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/solver.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/thread_safe_queue.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/idataprovider.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/isolver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/solver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/linearsolver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/laplacesolver.h
 )
+
+message("----------------")
+message(${SOURCE_FILES} ${HEADER_FILES})
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/solver.hpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/isolver.h)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/idataprovider.hpp)
-    set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/thread_safe_queue.hpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/solver.h)
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/linearsolver.h)
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/laplacesolver.h)
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/idataprovider.h)
+
 
 # For access to standard installation directory variables (CMAKE_INSTALL_xDIR).
-#include(GNUInstallDirs)
+# include(GNUInstallDirs)
 
 # Set library shared object and API header file to install.
 #install(TARGETS ${PROJECT_NAME}
@@ -48,4 +60,3 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
 #install(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc
 #    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 #)
-message("----------------done-----------------")
